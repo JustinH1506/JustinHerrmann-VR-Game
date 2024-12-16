@@ -50,6 +50,9 @@ public class PlayerActions : MonoBehaviour
 
 	#region Methods
 	
+	/// <summary>
+	/// Enable the InputMap and subscribe functions to the corresponding action.
+	/// </summary>
 	private void OnEnable()
 	{
 		_playerActions.Enable();
@@ -61,6 +64,9 @@ public class PlayerActions : MonoBehaviour
 		_playerActions.Laptop.Move.canceled += StartVRMovement;
 	}
 
+	/// <summary>
+	/// Disable the InputMap and subscribe functions to the corresponding action.
+	/// </summary>
 	private void OnDisable()
 	{
 		_playerActions.Disable();
@@ -72,6 +78,9 @@ public class PlayerActions : MonoBehaviour
 		_playerActions.Laptop.Move.canceled -= StartVRMovement;
 	}
 
+	/// <summary>
+	/// Getting some components and setting some values before starting the game.
+	/// </summary>
 	private void Awake()
 	{
 		_playerActions = new PlayerActionMap();
@@ -85,24 +94,20 @@ public class PlayerActions : MonoBehaviour
 		angle = currentPosition * 360 * Mathf.Deg2Rad;
 	}
 	
-
+	/// <summary>
+	/// Call the Move Player function.
+	/// </summary>
 	private void FixedUpdate()
 	{
 		MovePlayer();
 	}
 
-	private void Update()
-	{
-		if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
-		{
-			Jump();
-		}
-	}
-
+	/// <summary>
+	/// A Function that moves the Player along a circular area depending on the Players input.
+	/// </summary>
 	private void MovePlayer()
 	{
-		//moveInput = -moveInput;
-
+		
 		if (!IsGrounded())
 		{
 			anim.SetBool("IsGrounded", true);
@@ -129,6 +134,9 @@ public class PlayerActions : MonoBehaviour
 		transform.LookAt(Vector3.zero);
 	}
 
+	/// <summary>
+	/// Lets the Player Jump. 
+	/// </summary>
 	private void Jump()
 	{
 		Vector2 directionToJump = new Vector2(0f, jumpForce);
@@ -136,6 +144,10 @@ public class PlayerActions : MonoBehaviour
 		rb.velocity = directionToJump;
 	}
 
+	/// <summary>
+	/// Asks if there is an GameObject with the Ground layer under the player.
+	/// </summary>
+	/// <returns></returns>
 	bool IsGrounded()
 	{
 		if (Physics.Raycast(transform.position, Vector3.down, groundDistance, groundMask))
@@ -148,6 +160,11 @@ public class PlayerActions : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Asks for a collider at the sides of the Player to stop the Player if there are some.
+	/// </summary>
+	/// <param name="raycastDirection"></param>
+	/// <returns></returns>
 	private bool DirectionCollision(Vector3 raycastDirection)
 	{
 		if (Physics.Raycast(transform.position, raycastDirection, 0.1f))
@@ -160,6 +177,10 @@ public class PlayerActions : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Calculates the new end position needed for 
+	/// </summary>
+	/// <param name="context"></param>
 	void CalculateEndpointPosition(InputAction.CallbackContext context)
 	{
 		Debug.Log("Starts Calculating");
@@ -171,6 +192,10 @@ public class PlayerActions : MonoBehaviour
 		endpos = endpoint.position - controllerPos;
 	}
 
+	/// <summary>
+	/// Calculates the motion input of the Right controller and dependent on the direction changes the direction the Player moves
+	/// </summary>
+	/// <param name="context"></param>
 	private void StartVRMovement(InputAction.CallbackContext context)
 	{
 		Debug.Log("Should Start moving");

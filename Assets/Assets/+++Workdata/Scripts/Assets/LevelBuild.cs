@@ -11,6 +11,9 @@ public class LevelBuild : MonoBehaviour
 
 	[SerializeField] private List<SpriteRenderer> levelObjects = new List<SpriteRenderer>();
 
+	/// <summary>
+	/// Finds all the sprite renderer and puts them on an angle so that the level ist in a circular are around the Player
+	/// </summary>
 	private void Start()
 	{
 		levelObjects = FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None).ToList();
@@ -38,7 +41,5 @@ public class LevelBuild : MonoBehaviour
 
 			currentObject.transform.LookAt(Vector3.zero);
 		}
-		
-		
 	}
 }

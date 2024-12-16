@@ -22,9 +22,9 @@ public class Enemy : MonoBehaviour
 
 	#region Methods
 
-	
-
-	#endregion
+	/// <summary>
+	/// Gets some components and calculates the angle value
+	/// </summary>
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -34,6 +34,10 @@ public class Enemy : MonoBehaviour
 		angle = currentPosition * 360 * Mathf.Deg2Rad;
 	}
 
+	/// <summary>
+	/// Calls lose if the player gets touched. sets move speed of enemies when hitting a wall. 
+	/// </summary>
+	/// <param name="other"></param>
 	private void OnCollisionEnter(Collision other)
 	{
 		if (other.gameObject.CompareTag("Player"))
@@ -48,6 +52,9 @@ public class Enemy : MonoBehaviour
 		moveSpeed = -moveSpeed;
 	}
 
+	/// <summary>
+	/// Calculates the movement in a circular area for the enemy
+	/// </summary>
 	private void Update()
 	{
 
@@ -68,4 +75,6 @@ public class Enemy : MonoBehaviour
 		
 		transform.LookAt(Vector3.zero);
 	}
+	
+	#endregion
 }
